@@ -11,3 +11,5 @@ all: dumpathrom
 dumpathrom: dumpathrom.o
 	$(LD) $(LDFLAGS) -o $@ $<
 
+clean:
+	$(RM) dumpathrom *.o *.obj
