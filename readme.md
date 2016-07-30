@@ -17,5 +17,6 @@ Refer to http://www.insanelymac.com/forum/topic/299732-atheros-9k-series-rom-mod
 > mv overriderom.patch ${kernel-source-root}/drivers/net/wireless/ath  
 > cd ${kernel-source-root}/drivers/net/wireless/ath  
 > patch -s -p0 < overriderom.patch  
+
 **ISSUE**  
 Overriding ROM is not configurable and enabled by default (using #defines directly in source code). Fixing of that is welcome  
