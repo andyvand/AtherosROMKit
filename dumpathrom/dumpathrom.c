@@ -189,7 +189,7 @@ static void ath9k_hw_4k_dump_eeprom(struct ar5416_eeprom_4k *eep)
     printf("\n");
 
     printf("-RegDomain: 0x%.4x\n", *(unsigned int *)pBase->regDmn);
-	PR_EEP(" RegDomain1", pBase->regDmn[0]);
+	PR_EEP(" RegDomain1", pBase->regDmn[0] ^ 0x8000);
 	PR_EEP(" RegDomain2", pBase->regDmn[1]);
     printf("\n");
 
@@ -255,9 +255,9 @@ int main(int argc, char **argv)
 
     if ((argc != 2) || (!strncmp(argv[1], "--help", strlen(argv[1]))) || (!strncmp(argv[1], "-h", strlen(argv[1]))))
     {
-        printf("AnV Atheros ROM Tool V1.0 (AR928X/AR9285 edition)\n");
+        printf("AnV Atheros ROM Tool V1.1 (AR9271/AR928X/AR9285 edition)\n");
         printf("Usage: %s <infile>\n\n", argv[0]);
-        printf("Copyright (C) 2014 AnV Software, all rights reserved.\n");
+        printf("Copyright (C) 2018 AnV Software, all rights reserved.\n");
 
         return 1;
     }
@@ -275,11 +275,11 @@ int main(int argc, char **argv)
     fSize = ftell(f);
     fseek(f, 0, SEEK_SET);
 
-    if ((fSize != 376) && (fSize != 512) && (fSize != 4096))
+    if ((fSize != 376) && (fSize != 512) && (fSize != 1024) && (fSize != 4096))
     {
         fclose(f);
 
-        printf("ERROR: Invalid size, %d is not 376, 512 or 4096!\n", fSize);
+        printf("ERROR: Invalid size, %d is not 376, 512, 1024 or 4096!\n", fSize);
 
         return 3;
     }
@@ -316,6 +316,7 @@ int main(int argc, char **argv)
             break;
 
         case 512:
+    	case 1024:
         case 4096:
             romdata = (struct ar5416_eeprom_4k *)(buffer + 128);
             break;
